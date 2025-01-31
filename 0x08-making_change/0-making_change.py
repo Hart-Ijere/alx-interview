@@ -4,16 +4,25 @@ Module for makeChange function
 """
 
 def makeChange(coins, total):
-    """
-    Determine the fewest number of coins needed to meet a given amount total.
-    
+    """Determine the fewest number of coins needed to meet a given amount total.
+
     Args:
-        coins (list): List of coin denominations.
-        total (int): Target amount.
-    
+        coins (list): A list of coin denominations (integers).
+        total (int): The target amount (integer).
+
     Returns:
-        int: Fewest number of coins needed, or -1 if the total cannot be met.
+        int: The fewest number of coins needed to reach the total, or -1 if the
+             total cannot be met with the given coins.
     """
+    if not isinstance(coins, list):
+        raise TypeError("coins must be a list")
+    if not all(isinstance(coin, int) and coin > 0 for coin in coins):
+        raise ValueError("coins must be a list of positive integers")
+    if not isinstance(total, int):
+        raise TypeError("total must be an integer")
+    if total < 0:
+        raise ValueError("total must be a non-negative integer")
+
     if total <= 0:
         return 0
 
