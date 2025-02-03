@@ -1,28 +1,53 @@
 #!/usr/bin/python3
+"""
+Module for isWinner function.
+"""
 
-def makeChange(coins, total):
+def isWinner(x, nums):
     """
-    Determines the fewest number of coins needed to meet a given amount.
+    Determines the winner of a game based on prime number selection.
 
     Args:
-        coins: A list of the values of the coins in your possession.
-        total: The target amount to be met.
+        x (int): The number of rounds.
+        nums (list): A list of n values, where each n represents the upper
+                     limit of the set of consecutive integers for a round.
 
     Returns:
-        The fewest number of coins needed to meet the total.
-        0 if total is 0 or less.
-        -1 if total cannot be met by any number of coins.
+        str or None: The name of the player who won the most rounds
+                     ("Maria" or "Ben"), or None if the winner cannot be
+                     determined.
     """
 
-    if total <= 0:
-        return 0
+    def count_primes(n):
+        """Counts the number of primes up to n using the Sieve of Eratosthenes."""
+        if n < 2:
+            return 0
+        is_prime = [True] * (n + 1)
+        is_prime[0] = is_prime[1] = False
+        for i in range(2, int(n**0.5) + 1):
+            if is_prime[i]:
+                for multiple in range(i*i, n + 1, i):
+                    is_prime[multiple] = False
+        return sum(is_prime)
 
-    min_coins = [float('inf')] * (total + 1)  # Initialize with infinity
-    min_coins[0] = 0  # Base case: 0 coins needed for 0 amount
+    maria_wins = 0
+    ben_wins = 0
 
-    for amount in range(1, total + 1):
-        for coin in coins:
-            if amount >= coin:
-                min_coins[amount] = min(min_coins[amount], min_coins[amount - coin] + 1)
+    for n in nums:
+        primes = count_primes(n)
+        if primes % 2 == 0:  # Even number of primes, Ben wins
+            ben_wins += 1
+        else:  # Odd number of primes, Maria wins
+            maria_wins += 1
 
-    return min_coins[total] if min_coins[total] != float('inf') else -1
+    if maria_wins > ben_wins:
+        return "Maria"
+    elif ben_wins > maria_wins:
+        return "Ben"
+    else:
+        return None
+
+
+if __name__ == "__main__":
+    print(isWinner(3, [5, 1, 7]))  # Example usage
+    print(isWinner(5, [1, 1, 1, 1, 1])) # Example usage
