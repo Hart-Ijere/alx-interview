@@ -1,4 +1,22 @@
 #!/usr/bin/python3
+"""
+Prime Game Module
+
+Maria and Ben are playing a game using a set of consecutive integers from 1 to n.
+They take turns choosing a prime number and removing it along with its multiples.
+Maria always goes first, and the player who cannot make a move loses.
+
+This module provides a function `isWinner` to determine the overall winner after x rounds.
+
+Functions:
+    - sieve(n): Returns a list indicating prime numbers up to n.
+    - count_primes(n, primes): Counts prime numbers up to n.
+    - isWinner(x, nums): Determines the winner based on optimal gameplay.
+
+Usage:
+    - Call `isWinner(x, nums)` with the number of rounds `x` and a list of `n` values.
+    - The function returns the name of the player who wins the most rounds.
+"""
 
 def sieve(n):
     """Returns a list where prime[i] is True if i is a prime number, otherwise False."""
@@ -17,13 +35,13 @@ def count_primes(n, primes):
 def isWinner(x, nums):
     """
     Determines the winner of the game.
-    
+
     Parameters:
     x (int): Number of rounds
     nums (list): List containing values of n for each round
-    
+
     Returns:
-    str: Name of the player with the most wins (Maria or Ben) or None if it's a tie.
+    str: Name of the player with the most wins ("Maria" or "Ben"), or None if it's a tie.
     """
     if not nums or x < 1:
         return None
